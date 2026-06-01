@@ -1,51 +1,102 @@
-auto-generated: true
 indices:
-  blog:
+  events:
     include:
-      - /blog/**
-    target: /blog/query-index.json
+      - /events/*
+    target: /events/query-index.json
     properties:
       title:
         select: head > meta[property="og:title"]
-        value: |
-          attribute(el, "content")
+        value: attribute(el, "content")
       description:
         select: head > meta[name="description"]
-        value: |
-          attribute(el, "content")
+        value: attribute(el, "content")
       date:
-        select: head > meta[name="publication-date"]
-        value: |
-          dateValue(attribute(el, 'content'), 'MM-DD-YYYY')
-      lastModified:
-        select: none
-        value: |
-          parseTimestamp(headers['last-modified'], 'ddd, DD MMM YYYY hh:mm:ss GMT')
-      featured:
-        select: head > meta[name="featured"]
-        value: |
-          attribute(el, "content")
-      author:
-        select: head > meta[name="author"]
-        value: |
-          attribute(el, "content")
+        select: head > meta[name="event-date"]
+        value: dateValue(attribute(el, 'content'), 'MM-DD-YYYY')
       image:
         select: head > meta[property="og:image"]
-        value: |
-          match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")
-      content:
-        select: main > div
-        values: characters(textContent(el), 0, 200)
-      tags:
-        select: head > meta[property="article:tag"]
-        values: |
-          attribute(el, 'content')
-  authors:
+        value: match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")
+
+  event-summit26:
     include:
-      - /author/**
-    target: /author/query-index.json
+      - /events/summit26/**
+    target: /events/summit26/query-index.json
     properties:
       title:
         select: head > meta[property="og:title"]
-        value: |
-          attribute(el, "content")
+        value: attribute(el, "content")
+      labNumber:
+        select: head > meta[name="lab-number"]
+        value: attribute(el, "content")
+
+  event-summit26-london:
+    include:
+      - /events/summit26-london/**
+    target: /events/summit26-london/query-index.json
+    properties:
+      title:
+        select: head > meta[property="og:title"]
+        value: attribute(el, "content")
+      labNumber:
+        select: head > meta[name="lab-number"]
+        value: attribute(el, "content")
+
+  event-summit26-singapore:
+    include:
+      - /events/summit26-singapore/**
+    target: /events/summit26-singapore/query-index.json
+    properties:
+      title:
+        select: head > meta[property="og:title"]
+        value: attribute(el, "content")
+      labNumber:
+        select: head > meta[name="lab-number"]
+        value: attribute(el, "content")
+
+  event-summit26-sydney:
+    include:
+      - /events/summit26-sydney/**
+    target: /events/summit26-sydney/query-index.json
+    properties:
+      title:
+        select: head > meta[property="og:title"]
+        value: attribute(el, "content")
+      labNumber:
+        select: head > meta[name="lab-number"]
+        value: attribute(el, "content")
+
+  event-dev-live26:
+    include:
+      - /events/dev-live26/**
+    target: /events/dev-live26/query-index.json
+    properties:
+      title:
+        select: head > meta[property="og:title"]
+        value: attribute(el, "content")
+      labNumber:
+        select: head > meta[name="lab-number"]
+        value: attribute(el, "content")
+
+  event-dev-live25:
+    include:
+      - /events/dev-live25/**
+    target: /events/dev-live25/query-index.json
+    properties:
+      title:
+        select: head > meta[property="og:title"]
+        value: attribute(el, "content")
+      labNumber:
+        select: head > meta[name="lab-number"]
+        value: attribute(el, "content")
+
+  event-eds-masterclass:
+    include:
+      - /events/eds-masterclass/**
+    target: /events/eds-masterclass/query-index.json
+    properties:
+      title:
+        select: head > meta[property="og:title"]
+        value: attribute(el, "content")
+      labNumber:
+        select: head > meta[name="lab-number"]
+        value: attribute(el, "content")

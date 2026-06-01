@@ -134,8 +134,15 @@ function formatSiteData(pageData) {
   return root;
 }
 
+function getQueryIndexUrl() {
+  const { pathname } = window.location;
+  const eventMatch = pathname.match(/^\/events\/([^/]+)/);
+  if (eventMatch) return `/events/${eventMatch[1]}/query-index.json`;
+  return `${codeBase}/query-index.json`;
+}
+
 async function fetchSiteData() {
-  const resp = await fetch(`${codeBase}/query-index.json`);
+  const resp = await fetch(getQueryIndexUrl());
   if (!resp.ok) throw Error('Could not fetch query index');
   const { data } = await resp.json();
   return data;
@@ -166,6 +173,12 @@ export default async function init(el) {
   try {
     const { pathname } = window.location;
     const siteData = await fetchSiteData();
+
+    if (!siteData?.length) {
+      el.closest('body')?.classList.add('sitenav-empty');
+      return;
+    }
+
     const formatted = formatSiteData(siteData);
     const allLevel2 = collectLevel2(formatted);
     const siteList = generateSiteList(formatted, pathname);
@@ -195,6 +208,6 @@ export default async function init(el) {
 
     el.append(search, siteList);
   } catch (e) {
-    throw Error(e);
+    el.closest('body')?.classList.add('sitenav-empty');
   }
 }

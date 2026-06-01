@@ -303,7 +303,8 @@ img {
       grid-area: footer;
     }
 
-    &.sitenav-collapsed {
+    &.sitenav-collapsed,
+    &.sitenav-empty {
       grid-template:
         "header header" auto
         "main pagenav" 1fr
