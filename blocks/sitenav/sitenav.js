@@ -174,10 +174,7 @@ export default async function init(el) {
     const { pathname } = window.location;
     const siteData = await fetchSiteData();
 
-    if (!siteData?.length) {
-      el.closest('body')?.classList.add('sitenav-empty');
-      return;
-    }
+    if (!siteData?.length) return;
 
     const formatted = formatSiteData(siteData);
     const allLevel2 = collectLevel2(formatted);
@@ -208,6 +205,6 @@ export default async function init(el) {
 
     el.append(search, siteList);
   } catch (e) {
-    el.closest('body')?.classList.add('sitenav-empty');
+    // sitenav panel remains visible with brand logo; just no list
   }
 }

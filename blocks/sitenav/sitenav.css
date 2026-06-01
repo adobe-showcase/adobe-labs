@@ -128,9 +128,6 @@ body.sitenav-open .sitenav {
   transform: translateX(0);
 }
 
-body.sitenav-empty .sitenav {
-  display: none;
-}
 
 @media (width >= 900px) {
   .sitenav,
