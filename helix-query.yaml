@@ -12,7 +12,7 @@ indices:
         value: attribute(el, "content")
       date:
         select: head > meta[name="event-date"]
-        value: dateValue(attribute(el, 'content'), 'MM-DD-YYYY')
+        value: attribute(el, "content")
       image:
         select: head > meta[property="og:image"]
         value: match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")

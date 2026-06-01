@@ -1,21 +1,16 @@
 const DEFAULT_IMAGE = 'https://adobelabs.dev/media_197fd103d3332517ce59fb4590f838b4290bae8f9.png';
 
+function dateSortValue(dateValue) {
+  if (!dateValue) return 0;
+  const parsed = new Date(dateValue).getTime();
+  return Number.isNaN(parsed) ? 0 : parsed;
+}
+
 async function fetchEventData() {
   const resp = await fetch('/events/query-index.json');
   if (!resp.ok) throw Error('Could not fetch event index');
   const { data } = await resp.json();
-  return data.sort((a, b) => {
-    const dateA = a.date ? new Date(a.date) : 0;
-    const dateB = b.date ? new Date(b.date) : 0;
-    return dateB - dateA;
-  });
-}
-
-function formatDate(dateValue) {
-  if (!dateValue) return '';
-  const date = new Date(dateValue);
-  if (Number.isNaN(date.getTime())) return '';
-  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  return data.sort((a, b) => dateSortValue(b.date) - dateSortValue(a.date));
 }
 
 function createCards(events) {
@@ -42,7 +37,7 @@ function createCards(events) {
 
     const date = document.createElement('p');
     date.className = 'event-list-card-date';
-    date.textContent = formatDate(event.date);
+    date.textContent = event.date || '';
 
     const description = document.createElement('p');
     description.className = 'event-list-card-description';
