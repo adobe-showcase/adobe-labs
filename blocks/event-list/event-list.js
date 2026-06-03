@@ -53,7 +53,7 @@ function createCards(events) {
   });
 
   const ul = document.createElement('ul');
-  ul.className = 'event-list';
+  ul.className = 'docket-event-list';
   ul.append(...cards);
   return ul;
 }
