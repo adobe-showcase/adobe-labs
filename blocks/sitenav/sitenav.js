@@ -88,6 +88,17 @@ function generateSiteList(siteData, pathname, level = 1) {
 }
 
 function formatSiteData(pageData) {
+  if (!pageData.length) return {};
+
+  // Determine how many leading path segments are shared by all items so the
+  // nav tree starts at the event level (e.g. "Adobe Summit Sydney") rather
+  // than showing the parent "events" folder as the root.
+  const normalizedPaths = pageData.map((p) => p.path.replace(/\/$/, ''));
+  const minDepth = Math.min(
+    ...normalizedPaths.map((p) => p.split('/').filter(Boolean).length),
+  );
+  const stripCount = minDepth > 1 ? minDepth - 1 : 0;
+
   // Sort so that index pages (trailing slash) are processed last
   const sorted = [...pageData].sort((a, b) => {
     const aIsIndex = a.path.endsWith('/');
@@ -100,7 +111,7 @@ function formatSiteData(pageData) {
   const root = sorted.reduce((acc, item) => {
     // Normalize path: remove trailing slash
     const normalizedPath = item.path.replace(/\/$/, '');
-    const segments = normalizedPath.substring(1).split('/').filter(Boolean);
+    const segments = normalizedPath.substring(1).split('/').filter(Boolean).slice(stripCount);
 
     if (segments.length === 0) return acc;
 

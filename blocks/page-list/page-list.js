@@ -1,11 +1,10 @@
-import { getConfig } from '../../scripts/nx.js';
-
-const { codeBase } = getConfig();
-
 const DEFAULT_IMAGE = 'https://adobelabs.dev/media_197fd103d3332517ce59fb4590f838b4290bae8f9.png';
 
 async function fetchSiteData() {
-  const resp = await fetch(`${codeBase}/query-index.json`);
+  const basePath = window.location.pathname.endsWith('/')
+    ? window.location.pathname
+    : `${window.location.pathname}/`;
+  const resp = await fetch(`${basePath}query-index.json`);
   if (!resp.ok) throw Error('Could not fetch query index');
   const { data } = await resp.json();
   return data.sort((a, b) => {
