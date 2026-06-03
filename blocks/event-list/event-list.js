@@ -2,7 +2,10 @@ const DEFAULT_IMAGE = 'https://adobelabs.dev/media_197fd103d3332517ce59fb4590f83
 
 function dateSortValue(dateValue) {
   if (!dateValue) return 0;
-  const parsed = new Date(dateValue).getTime();
+  // Normalize date ranges like "April 20-22, 2026" or "Nov 10-11, 2025" to
+  // their start date so they sort correctly alongside single-day dates.
+  const normalized = dateValue.replace(/(\d+)-\d+/, '$1');
+  const parsed = new Date(normalized).getTime();
   return Number.isNaN(parsed) ? 0 : parsed;
 }
 
