@@ -16,8 +16,9 @@
     display: block;
     color: light-dark(var(--s2-gray-500), var(--s2-gray-500));
     font-weight: 300;
+    line-height: 1.4;
     text-decoration: none;
-    padding: 4px 8px;
+    padding: 2px 8px;
     border-radius: 6px;
     transition: background-color 0.15s ease, color 0.15s ease;
 
