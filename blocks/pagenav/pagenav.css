@@ -3,6 +3,7 @@
   top: 24px;
   align-self: start;
   padding-right: 36px;
+  font-size: var(--body-font-size-s);
   color: light-dark(var(--s2-gray-700), var(--s2-gray-500));
 
   ul {
