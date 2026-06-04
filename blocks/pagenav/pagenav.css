@@ -14,21 +14,22 @@
 
   a {
     display: block;
-    color: light-dark(var(--s2-gray-500), var(--s2-gray-600));
+    color: light-dark(var(--s2-gray-500), var(--s2-gray-500));
     font-weight: 300;
     text-decoration: none;
     padding: 4px 8px;
     border-radius: 6px;
-    transition: background-color 0.15s ease;
+    transition: background-color 0.15s ease, color 0.15s ease;
 
     &:hover {
       background-color: light-dark(var(--s2-gray-100), rgb(255 255 255 / 10%));
+      color: light-dark(var(--s2-gray-700), var(--s2-gray-200));
     }
   }
 
   li.is-current > a {
     background-color: light-dark(var(--s2-gray-200), rgb(255 255 255 / 18%));
-    color: light-dark(var(--s2-gray-800), var(--s2-gray-100));
+    color: light-dark(var(--s2-gray-800), var(--s2-gray-50));
     font-weight: 400;
   }
 
