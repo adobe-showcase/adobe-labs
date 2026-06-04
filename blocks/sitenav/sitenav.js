@@ -159,6 +159,21 @@ async function fetchSiteData() {
   return data;
 }
 
+async function fetchEvents() {
+  const resp = await fetch('/events/query-index.json');
+  if (!resp.ok) throw Error('Could not fetch events index');
+  const { data } = await resp.json();
+  return data.map(({ title, path }) => ({ title, path })).filter((item) => item.title);
+}
+
+function buildSearch(placeholder) {
+  const search = document.createElement('input');
+  search.type = 'text';
+  search.className = 'sitenav-search';
+  search.placeholder = placeholder;
+  return search;
+}
+
 export default async function init(el) {
   const link = document.createElement('a');
   link.href = '/';
@@ -181,8 +196,38 @@ export default async function init(el) {
   brand.append(link, closeBtn);
   el.append(brand);
 
+  const { pathname } = window.location;
+
+  // Home has no lab tree; offer an event finder instead of the lab search.
+  if (pathname === '/') {
+    let events = [];
+    try {
+      events = await fetchEvents();
+    } catch (e) {
+      // No events index available; leave the rail with just the brand.
+    }
+    if (!events.length) return;
+
+    const search = buildSearch('Search for an event...');
+    let filteredList = null;
+
+    search.addEventListener('input', () => {
+      const query = search.value.trim().toLowerCase();
+      if (filteredList) { filteredList.remove(); filteredList = null; }
+      if (!query) return;
+
+      const matches = events
+        .filter((item) => item.title.toLowerCase().includes(query))
+        .sort((a, b) => a.title.localeCompare(b.title));
+      filteredList = generateFilteredList(matches);
+      search.after(filteredList);
+    });
+
+    el.append(search);
+    return;
+  }
+
   try {
-    const { pathname } = window.location;
     const siteData = await fetchSiteData();
 
     if (!siteData?.length) return;
@@ -191,10 +236,7 @@ export default async function init(el) {
     const allLevel2 = collectLevel2(formatted);
     const siteList = generateSiteList(formatted, pathname);
 
-    const search = document.createElement('input');
-    search.type = 'text';
-    search.className = 'sitenav-search';
-    search.placeholder = 'Search for a lab...';
+    const search = buildSearch('Search for a lab...');
 
     let filteredList = null;
 
