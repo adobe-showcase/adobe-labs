@@ -109,6 +109,8 @@ function setColorScheme() {
   if (localStorage.getItem('sitenav-collapsed') === 'true') {
     document.body.classList.add('sitenav-collapsed');
   }
+  const isHome = window.location.pathname === '/';
+  if (isHome) document.body.classList.add('home');
   await setNxConfig(conf);
   setColorScheme();
   detectTutorial();
@@ -120,5 +122,5 @@ function setColorScheme() {
 
   // Lazy project functions
   loadNav('sitenav');
-  loadNav('pagenav');
+  if (!isHome) loadNav('pagenav');
 }());

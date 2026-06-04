@@ -317,6 +317,21 @@ img {
     &.sitenav-open::after {
       content: unset;
     }
+
+    /* Home page has no in-page nav, so drop the empty pagenav column. */
+    &.home {
+      grid-template:
+        "sitenav header" auto
+        "sitenav main" 1fr
+        "sitenav footer" auto / 300px minmax(0, 1fr);
+
+      &.sitenav-collapsed {
+        grid-template:
+          "header" auto
+          "main" 1fr
+          "footer" auto / minmax(0, 1fr);
+      }
+    }
   }
 }
 
