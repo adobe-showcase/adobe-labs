@@ -83,7 +83,7 @@
   }
 
   li {
-    margin-block: 1rem 0;
+    margin-block: 2px 0;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
