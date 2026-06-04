@@ -62,6 +62,30 @@ indices:
         select: head > meta[name="lab-number"]
         value: attribute(el, "content")
 
+  event-summit26-mumbai:
+    include:
+      - /events/summit26-mumbai/**
+    target: /events/summit26-mumbai/query-index.json
+    properties:
+      title:
+        select: head > meta[property="og:title"]
+        value: attribute(el, "content")
+      labNumber:
+        select: head > meta[name="lab-number"]
+        value: attribute(el, "content")
+
+  event-summit26-munich:
+    include:
+      - /events/summit26-munich/**
+    target: /events/summit26-munich/query-index.json
+    properties:
+      title:
+        select: head > meta[property="og:title"]
+        value: attribute(el, "content")
+      labNumber:
+        select: head > meta[name="lab-number"]
+        value: attribute(el, "content")
+
   event-summit26-sydney:
     include:
       - /events/summit26-sydney/**
