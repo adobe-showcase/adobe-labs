@@ -60,4 +60,23 @@ export default function init(el) {
   }
 
   el.append(rootUl);
+
+  // Map heading id -> nav li for scroll-spy
+  const navMap = new Map();
+  headingData.slice(1).forEach(({ element }, i) => {
+    const id = headings[i + 1].id;
+    if (id) navMap.set(id, element);
+  });
+
+  let currentLi = null;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      if (currentLi) currentLi.classList.remove('is-current');
+      currentLi = navMap.get(entry.target.id) ?? null;
+      if (currentLi) currentLi.classList.add('is-current');
+    });
+  }, { rootMargin: '0px 0px -85% 0px', threshold: 0 });
+
+  headings.slice(1).forEach((h) => { if (h.id) observer.observe(h); });
 }
