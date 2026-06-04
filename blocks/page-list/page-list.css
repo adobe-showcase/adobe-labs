@@ -2,7 +2,7 @@
   list-style: none;
   display: grid;
   gap: 24px;
-  grid-template-columns: repeat(2, minmax(230px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   margin: 0 0 var(--spacing-700) 0;
   padding: 0;
 
@@ -48,6 +48,20 @@
       height: 100%;
       box-shadow: unset;
     }
+  }
+
+  .docket-page-list-card-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 1;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: var(--body-font-size-xs);
+    font-weight: 700;
+    line-height: 1.4;
+    color: #fff;
+    background-color: var(--s2-gray-700);
   }
 
   .docket-page-list-card-text-container {

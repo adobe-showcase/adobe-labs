@@ -1,4 +1,4 @@
-const DEFAULT_IMAGE = 'https://adobelabs.dev/media_197fd103d3332517ce59fb4590f838b4290bae8f9.png';
+const DEFAULT_IMAGE = '/img/default-lab-card.png';
 
 const STATUS_LABELS = { live: 'Live now', upcoming: 'Upcoming', past: 'Past' };
 const STATUS_RANK = { live: 0, upcoming: 1, past: 2 };

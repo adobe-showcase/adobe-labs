@@ -1,4 +1,4 @@
-const DEFAULT_IMAGE = 'https://adobelabs.dev/media_197fd103d3332517ce59fb4590f838b4290bae8f9.png';
+const DEFAULT_IMAGE = '/img/default-lab-card.png';
 
 async function fetchSiteData() {
   const basePath = window.location.pathname.endsWith('/')
@@ -34,6 +34,13 @@ function createCards(siteData) {
     const img = document.createElement('img');
     img.src = DEFAULT_IMAGE;
     imgContainer.append(img);
+
+    if (siteData[key].labNumber) {
+      const badge = document.createElement('span');
+      badge.className = 'docket-page-list-card-badge';
+      badge.textContent = siteData[key].labNumber;
+      imgContainer.append(badge);
+    }
     const textContainer = document.createElement('div');
     textContainer.className = 'docket-page-list-card-text-container';
 
@@ -43,7 +50,7 @@ function createCards(siteData) {
 
     const description = document.createElement('p');
     description.classList.add('docket-page-list-card-description');
-    description.innerText = siteData[key].description;
+    description.innerText = siteData[key].description || '';
 
     textContainer.append(title, description);
     link.append(imgContainer, textContainer);
