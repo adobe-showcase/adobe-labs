@@ -2,9 +2,11 @@ const DEFAULT_IMAGE = 'https://adobelabs.dev/media_197fd103d3332517ce59fb4590f83
 
 const STATUS_LABELS = { live: 'Live now', upcoming: 'Upcoming', past: 'Past' };
 const STATUS_RANK = { live: 0, upcoming: 1, past: 2 };
+const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 
 // Parse a human display date like "April 20-22, 2026", "June 23, 2026", or
-// "June 30 - July 2, 2026" into start/end calendar dates.
+// "June 30 - July 2, 2026" into start/end calendar dates. Used only as a
+// fallback for events that don't yet have structured start-date/end-date.
 function parseEventDates(dateValue) {
   if (!dateValue) return null;
   const str = dateValue.replace(/[‒-―]/g, '-').replace(/\s+/g, ' ').trim();
@@ -52,14 +54,26 @@ function todayInTimeZone(timeZone) {
   }
 }
 
+// Resolve an event's start/end as ISO dates, preferring the structured
+// start-date/end-date fields and falling back to parsing the display string.
+function getEventDates(event) {
+  if (ISO_DATE.test(event.startDate || '')) {
+    const startISO = event.startDate;
+    const endISO = ISO_DATE.test(event.endDate || '') ? event.endDate : startISO;
+    return { startISO, endISO };
+  }
+  const parsed = parseEventDates(event.date);
+  if (!parsed) return null;
+  return { startISO: toISODate(parsed.start), endISO: toISODate(parsed.end) };
+}
+
 function decorateStatus(event) {
-  const dates = parseEventDates(event.date);
+  const dates = getEventDates(event);
   if (!dates) {
     // Undated/unparseable: keep visible but sort to the end of upcoming.
     return { ...event, status: 'upcoming', startISO: '9999-12-31' };
   }
-  const startISO = toISODate(dates.start);
-  const endISO = toISODate(dates.end);
+  const { startISO, endISO } = dates;
   const today = todayInTimeZone(event.timezone);
   let status = 'live';
   if (today < startISO) status = 'upcoming';

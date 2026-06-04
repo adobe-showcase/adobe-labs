@@ -13,6 +13,12 @@ indices:
       date:
         select: head > meta[name="event-date"]
         value: attribute(el, "content")
+      startDate:
+        select: head > meta[name="start-date"]
+        value: attribute(el, "content")
+      endDate:
+        select: head > meta[name="end-date"]
+        value: attribute(el, "content")
       timezone:
         select: head > meta[name="timezone"]
         value: attribute(el, "content")
