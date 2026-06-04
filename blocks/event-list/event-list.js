@@ -67,18 +67,35 @@ function getEventDates(event) {
   return { startISO: toISODate(parsed.start), endISO: toISODate(parsed.end) };
 }
 
+// Build a human display label from ISO dates, collapsing ranges
+// ("April 20 – 22, 2026", "June 30 – July 2, 2026"). Dates are constructed
+// from their parts to avoid the UTC-midnight off-by-one of new Date(iso).
+function formatDisplayDate(startISO, endISO) {
+  const toLocal = (iso) => {
+    const [y, m, d] = iso.split('-').map(Number);
+    return new Date(y, m - 1, d);
+  };
+  const start = toLocal(startISO);
+  const fmt = new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  if (!endISO || endISO === startISO) return fmt.format(start);
+  return fmt.formatRange(start, toLocal(endISO));
+}
+
 function decorateStatus(event) {
   const dates = getEventDates(event);
+  // Authored event-date wins (legacy or custom labels); otherwise generate.
+  const displayDate = event.date
+    || (dates ? formatDisplayDate(dates.startISO, dates.endISO) : '');
   if (!dates) {
     // Undated/unparseable: keep visible but sort to the end of upcoming.
-    return { ...event, status: 'upcoming', startISO: '9999-12-31' };
+    return { ...event, displayDate, status: 'upcoming', startISO: '9999-12-31' };
   }
   const { startISO, endISO } = dates;
   const today = todayInTimeZone(event.timezone);
   let status = 'live';
   if (today < startISO) status = 'upcoming';
   else if (today > endISO) status = 'past';
-  return { ...event, status, startISO, endISO };
+  return { ...event, displayDate, status, startISO, endISO };
 }
 
 async function fetchEventData() {
@@ -125,7 +142,7 @@ function createCards(events) {
 
     const date = document.createElement('p');
     date.className = 'event-list-card-date';
-    date.textContent = event.date || '';
+    date.textContent = event.displayDate || '';
 
     const description = document.createElement('p');
     description.className = 'event-list-card-description';
