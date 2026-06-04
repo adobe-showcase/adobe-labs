@@ -13,6 +13,9 @@ indices:
       date:
         select: head > meta[name="event-date"]
         value: attribute(el, "content")
+      timezone:
+        select: head > meta[name="timezone"]
+        value: attribute(el, "content")
       image:
         select: head > meta[property="og:image"]
         value: match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")

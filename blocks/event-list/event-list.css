@@ -50,6 +50,31 @@
     }
   }
 
+  .event-list-card-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 1;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: var(--body-font-size-xs);
+    font-weight: 700;
+    line-height: 1.4;
+    color: #fff;
+  }
+
+  .event-list-card-badge.is-live {
+    background-color: var(--s2-green-700);
+  }
+
+  .event-list-card-badge.is-upcoming {
+    background-color: var(--s2-blue-900);
+  }
+
+  .event-list-card-badge.is-past {
+    background-color: var(--s2-gray-600);
+  }
+
   .event-list-card-text {
     padding: 24px;
     display: flex;
