@@ -61,9 +61,11 @@ function generateSiteList(siteData, pathname, level = 1) {
 
   keys.forEach((key) => {
     const inPath = pathname.startsWith(siteData[key].path);
+    const isCurrent = siteData[key].path.replace(/\/$/, '') === pathname.replace(/\/$/, '');
 
     const li = document.createElement('li');
     if (inPath) li.classList.add('is-open');
+    if (isCurrent) li.classList.add('is-current');
 
     const a = document.createElement('a');
     a.href = siteData[key].path;
