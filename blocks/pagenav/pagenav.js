@@ -33,6 +33,7 @@ export default function init(el) {
     if (i === 0) {
       const ul = document.createElement('ul');
       current.element.innerText = 'On this page';
+      current.element.classList.add('pagenav-title');
       rootUl.appendChild(current.element);
       current.element.appendChild(ul);
       current.childList = ul;

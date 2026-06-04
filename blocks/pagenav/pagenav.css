@@ -14,4 +14,10 @@
   a {
     color: light-dark(var(--s2-gray-700), var(--s2-gray-500));
   }
+
+  .pagenav-title {
+    font-weight: 600;
+    color: light-dark(var(--s2-gray-800), var(--s2-gray-300));
+    margin-bottom: 8px;
+  }
 }
