@@ -9,8 +9,15 @@ function getNumber(text) {
   return num;
 }
 
+function getQueryIndexUrl() {
+  const { pathname } = window.location;
+  const eventMatch = pathname.match(/^\/events\/([^/]+)/);
+  if (eventMatch) return `/events/${eventMatch[1]}/query-index.json`;
+  return `${codeBase}/query-index.json`;
+}
+
 async function fetchSiteData() {
-  const resp = await fetch(`${codeBase}/query-index.json`);
+  const resp = await fetch(getQueryIndexUrl());
   if (!resp.ok) throw Error('Could not fetch query index');
   const { data } = await resp.json();
   return data;
