@@ -13,6 +13,7 @@ function getQueryIndexUrl() {
   const { pathname } = window.location;
   const eventMatch = pathname.match(/^\/events\/([^/]+)/);
   if (eventMatch) return `/events/${eventMatch[1]}/query-index.json`;
+  if (pathname.startsWith('/workbook-guide/')) return '/workbook-guide/query-index.json';
   return `${codeBase}/query-index.json`;
 }
 
