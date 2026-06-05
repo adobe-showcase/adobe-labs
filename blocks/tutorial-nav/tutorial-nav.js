@@ -45,9 +45,18 @@ function getMainNext(pageList, pathname) {
   // Determine if the tree is index based (page-name/) or name base (page-name)
   const sanitizedPath = pathname.endsWith('/') ? pathname.slice(0, -1) : pathname;
   let nextEntry = pageList.find((page) => page.path === `${sanitizedPath}/1`);
+
+  // Fall back to a direct subdirectory whose own /1 child exists (e.g. workbook-guide → l100)
   if (!nextEntry) {
-    return null;
+    nextEntry = pageList.find((page) => {
+      if (!page.path.startsWith(`${sanitizedPath}/`)) return false;
+      const rel = page.path.slice(sanitizedPath.length + 1);
+      if (rel.includes('/')) return false;
+      return pageList.some((p) => p.path === `${page.path}/1`);
+    });
   }
+
+  if (!nextEntry) return null;
   const nextCard = buildCard('Next', nextEntry);
   const nav = document.createElement('nav');
   nav.className = 'tutorial-nav one-card';
