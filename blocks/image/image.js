@@ -5,6 +5,11 @@ export default function init(el) {
   const picture = rows[0]?.querySelector('picture');
   if (!picture) return;
 
+  // Strip any label text the author may have put in the image row —
+  // keep only the picture element regardless of which cell it was in.
+  rows[0].innerHTML = '';
+  rows[0].append(picture);
+
   const config = rows.slice(1).reduce((acc, row) => {
     const [keyEl, valEl] = row.children;
     if (keyEl && valEl) acc[keyEl.textContent.toLowerCase().trim()] = valEl.textContent.trim();
