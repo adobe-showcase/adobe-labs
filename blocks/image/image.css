@@ -1,0 +1,30 @@
+.image {
+  /* Collapse EDS wrapper divs out of layout so picture participates directly */
+  > div,
+  > div > div {
+    display: contents;
+  }
+
+  picture {
+    max-width: 100%;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* Alignment variants — picture must be display:block (set in JS when needed) */
+  &.left picture {
+    margin-inline-end: auto;
+  }
+
+  &.center picture {
+    margin-inline: auto;
+  }
+
+  &.right picture {
+    margin-inline-start: auto;
+  }
+}
