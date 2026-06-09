@@ -60,8 +60,8 @@
     font-size: var(--body-font-size-xs);
     font-weight: 700;
     line-height: 1.4;
-    color: #fff;
-    background-color: var(--s2-gray-700);
+    color: var(--s2-gray-700);
+    background-color: #fff;
   }
 
   .docket-page-list-card-text-container {

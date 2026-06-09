@@ -1,27 +1,39 @@
 const DEFAULT_IMAGE = '/img/default-lab-card.png';
 
 async function fetchSiteData() {
-  const basePath = window.location.pathname.endsWith('/')
+  const normalizedPath = window.location.pathname.endsWith('/')
     ? window.location.pathname
     : `${window.location.pathname}/`;
-  const resp = await fetch(`${basePath}query-index.json`);
-  if (!resp.ok) throw Error('Could not fetch query index');
-  const { data } = await resp.json();
-  return data.sort((a, b) => {
-    const segmentsA = a.path.split('/').length - 1;
-    const segmentsB = b.path.split('/').length - 1;
-    return segmentsA - segmentsB;
-  });
+
+  // Walk up the path until we find a query-index.json
+  const segments = normalizedPath.split('/').filter(Boolean);
+  while (segments.length > 0) {
+    const basePath = `/${segments.join('/')}/`;
+    const resp = await fetch(`${basePath}query-index.json`); // eslint-disable-line no-await-in-loop
+    if (resp.ok) {
+      const { data } = await resp.json();
+      return data.sort((a, b) => {
+        const segmentsA = a.path.split('/').length - 1;
+        const segmentsB = b.path.split('/').length - 1;
+        return segmentsA - segmentsB;
+      });
+    }
+    segments.pop();
+  }
+  throw Error('Could not fetch query index');
 }
 
 function createCards(siteData) {
+  const currentDepth = window.location.pathname.split('/').filter(Boolean).length;
   const cards = Object.keys(siteData).reduce((acc, key) => {
-    const isPage = siteData[key].path === window.location.pathname;
-    const notDescendant = !siteData[key].path.startsWith(window.location.pathname);
-    const lastSegment = siteData[key].path.split('/').pop();
+    const itemPath = siteData[key].path;
+    const itemDepth = itemPath.split('/').filter(Boolean).length;
+    const notDirectChild = itemDepth !== currentDepth + 1;
+    const notDescendant = !itemPath.startsWith(window.location.pathname);
+    const lastSegment = itemPath.split('/').pop();
     const isNumberOnly = /^\d+$/.test(lastSegment);
 
-    if (isPage || notDescendant || isNumberOnly) return acc;
+    if (notDescendant || notDirectChild || isNumberOnly) return acc;
 
     const card = document.createElement('li');
     card.classList.add('docket-page-list-card');
@@ -48,11 +60,7 @@ function createCards(siteData) {
     title.classList.add('docket-page-list-card-title');
     title.innerText = siteData[key].title;
 
-    const description = document.createElement('p');
-    description.classList.add('docket-page-list-card-description');
-    description.innerText = siteData[key].description || '';
-
-    textContainer.append(title, description);
+    textContainer.append(title);
     link.append(imgContainer, textContainer);
     card.append(link);
     acc.push(card);
