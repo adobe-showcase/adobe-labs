@@ -84,6 +84,13 @@ function detectTutorial() {
   document.querySelector('main').append(section);
 }
 
+function isTrackPage() {
+  if (!document.body.classList.contains('tutorial-template')) return false;
+  const pathname = window.location.pathname.replace(/\/$/, '');
+  const lastSegment = pathname.split('/').pop();
+  return !Number.isFinite(Number(lastSegment));
+}
+
 const loadNav = async (name) => {
   const position = name === 'sitenav' ? 'beforebegin' : 'afterend';
   const main = document.querySelector('main');
@@ -122,5 +129,5 @@ function setColorScheme() {
 
   // Lazy project functions
   loadNav('sitenav');
-  if (!isHome) loadNav('pagenav');
+  if (!isHome && !isTrackPage()) loadNav('pagenav');
 }());
