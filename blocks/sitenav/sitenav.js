@@ -8,7 +8,7 @@ const EXP_ICON = `<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xm
 const { codeBase } = getConfig();
 
 function getTitle(page) {
-  if (page.labNumber) return `${page.labNumber}: ${page.title}`;
+  if (page.labNumber) return `<strong>${page.labNumber}</strong>: ${page.title}`;
 
   return page.title;
 }
@@ -31,7 +31,7 @@ function generateFilteredList(items) {
     const li = document.createElement('li');
     const a = document.createElement('a');
     a.href = path;
-    a.textContent = title;
+    a.innerHTML = title;
     li.append(a);
     ul.append(li);
   });
@@ -69,7 +69,7 @@ function generateSiteList(siteData, pathname, level = 1) {
 
     const a = document.createElement('a');
     a.href = siteData[key].path;
-    a.textContent = getTitle(siteData[key]);
+    a.innerHTML = getTitle(siteData[key]);
     li.append(a);
 
     if (Object.keys(siteData[key].children).length > 0) {
