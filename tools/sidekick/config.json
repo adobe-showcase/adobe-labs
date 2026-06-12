@@ -1,0 +1,10 @@
+{
+  "plugins": [
+    {
+      "id": "quick-edit",
+      "title": "Quick Edit",
+      "environments": ["dev", "preview"],
+      "event": "quick-edit"
+    }
+  ]
+}
