@@ -33,4 +33,6 @@ export default function init(el) {
       img.style.objectFit = 'cover';
     }
   }
+
+  picture.querySelector('img')?.classList.add('zoomable');
 }

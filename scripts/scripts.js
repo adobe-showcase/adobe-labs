@@ -82,6 +82,7 @@ function detectTutorial() {
   block.className = 'tutorial-nav';
   section.append(block);
   document.querySelector('main').append(section);
+  import('./lightbox.js');
 }
 
 function isTrackPage() {
