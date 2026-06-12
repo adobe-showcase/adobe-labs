@@ -113,7 +113,7 @@ function setColorScheme() {
   classList.add(scheme);
 }
 
-(async function loadPage() {
+export async function loadPage() {
   if (localStorage.getItem('sitenav-collapsed') === 'true') {
     document.body.classList.add('sitenav-collapsed');
   }
@@ -131,4 +131,30 @@ function setColorScheme() {
   // Lazy project functions
   loadNav('sitenav');
   if (!isHome && !isTrackPage()) loadNav('pagenav');
-}());
+
+  // Quick Edit
+  const loadQuickEdit = async (...args) => {
+    // eslint-disable-next-line import/no-cycle
+    const { default: initQuickEdit } = await import('../tools/quick-edit/quick-edit.js');
+    initQuickEdit(...args);
+  };
+  const addSidekickListeners = (sk) => {
+    sk.addEventListener('custom:quick-edit', loadQuickEdit);
+  };
+  const sk = document.querySelector('aem-sidekick');
+  if (sk) {
+    addSidekickListeners(sk);
+  } else {
+    document.addEventListener('sidekick-ready', () => {
+      addSidekickListeners(document.querySelector('aem-sidekick'));
+    }, { once: true });
+  }
+}
+
+loadPage();
+
+(() => {
+  const hasQE = new URL(window.location.href).searchParams.has('quick-edit');
+  // eslint-disable-next-line import/no-cycle
+  if (hasQE) import('../tools/quick-edit/quick-edit.js').then((mod) => mod.default());
+})();
