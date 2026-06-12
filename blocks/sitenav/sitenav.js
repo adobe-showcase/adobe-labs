@@ -259,6 +259,7 @@ export default async function init(el) {
     });
 
     el.append(search, siteList);
+    el.querySelector('.is-current')?.scrollIntoView({ block: 'nearest' });
   } catch (e) {
     // sitenav panel remains visible with brand logo; just no list
   }
