@@ -9,10 +9,22 @@ document.body.append(overlay);
 
 const imgWrap = overlay.querySelector('.lightbox-img-wrap');
 
+function scaleUp(img) {
+  const { naturalWidth } = img;
+  if (!naturalWidth) return;
+  img.style.width = `${naturalWidth * 2}px`;
+}
+
 function open(source) {
   imgWrap.innerHTML = '';
   imgWrap.append(source.closest('picture')?.cloneNode(true) ?? source.cloneNode(true));
   document.body.classList.add('lightbox-open');
+
+  const clonedImg = imgWrap.querySelector('img');
+  if (clonedImg) {
+    if (clonedImg.complete) scaleUp(clonedImg);
+    else clonedImg.addEventListener('load', () => scaleUp(clonedImg), { once: true });
+  }
 
   const onKey = (e) => {
     if (e.key === 'Escape') close(onKey);
