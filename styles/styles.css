@@ -271,7 +271,6 @@ img {
 
 @media (width >= 900px) {
   body {
-    background-color: light-dark(var(--s2-gray-75), var(--dark-color));
     display: grid;
     grid-template:
       "sitenav header header" auto
@@ -293,8 +292,6 @@ img {
     main {
       grid-area: main;
       margin: 0 72px;
-      background-color: light-dark(var(--light-color), var(--dark-color));
-      box-shadow: 0 0 32px light-dark(rgb(0 0 0 / 8%), rgb(0 0 0 / 40%));
     }
 
     .pagenav {
