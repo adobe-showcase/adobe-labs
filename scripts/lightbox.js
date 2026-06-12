@@ -10,9 +10,16 @@ document.body.append(overlay);
 const imgWrap = overlay.querySelector('.lightbox-img-wrap');
 
 function scaleUp(img) {
-  const { naturalWidth } = img;
+  const { naturalWidth, naturalHeight } = img;
   if (!naturalWidth) return;
-  img.style.width = `${naturalWidth * 2}px`;
+  const maxW = window.innerWidth * 0.9;
+  const maxH = window.innerHeight * 0.9;
+  const aspect = naturalWidth / naturalHeight;
+  let w = naturalWidth * 2;
+  let h = w / aspect;
+  if (w > maxW) { w = maxW; h = w / aspect; }
+  if (h > maxH) { w = maxH * aspect; }
+  img.style.width = `${Math.round(w)}px`;
 }
 
 function open(source) {
