@@ -4,7 +4,7 @@
   align-self: start;
   padding-right: 36px;
   font-size: var(--body-font-size-s);
-  color: light-dark(var(--s2-gray-700), var(--s2-gray-500));
+  color: var(--s2-gray-700);
 
   ul {
     margin: 0;
@@ -36,7 +36,7 @@
 
   .pagenav-title {
     font-weight: 600;
-    color: light-dark(var(--s2-gray-800), var(--s2-gray-300));
+    color: var(--s2-gray-800);
     margin-bottom: 4px;
   }
 }
