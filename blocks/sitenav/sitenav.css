@@ -73,14 +73,14 @@
     padding: 0;
     border: none;
     background-color: transparent;
-    width: 8px;
-    height: 8px;
+    width: 10px;
+    height: 10px;
     flex-shrink: 0;
-    color: var(--s2-gray-400);
+    color: var(--s2-gray-600);
 
     svg {
-      width: 8px;
-      height: 8px;
+      width: 10px;
+      height: 10px;
     }
   }
 
@@ -155,6 +155,10 @@ body.sitenav-open .sitenav {
   transform: translateX(0);
 }
 
+
+.sitenav .level-1 > li > .expand-tree {
+  display: none;
+}
 
 .sitenav ul:has(> li.is-open) > li:not(.is-open):has(> .expand-tree) {
   display: none;
