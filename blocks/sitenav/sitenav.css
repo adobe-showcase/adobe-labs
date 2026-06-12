@@ -68,12 +68,14 @@
   }
 
   .expand-tree {
+    order: -1;
+    margin-right: 4px;
     padding: 0;
-    margin: 0;
     border: none;
     background-color: transparent;
     width: 16px;
     height: 16px;
+    flex-shrink: 0;
     color: var(--s2-gray-400);
 
     svg {
@@ -108,33 +110,32 @@
 
   a {
     flex: 1 1 0%;
+    min-width: 0;
     display: block;
-    margin-right: 8px;
     overflow: hidden;
     padding: 4px 8px;
-    border-radius: 6px;
-    transition: background-color 0.15s ease;
+    border-left: 2px solid transparent;
+    transition: border-left-color 0.15s ease;
 
     &:hover {
-      background-color: light-dark(var(--s2-gray-100), rgb(255 255 255 / 10%));
+      border-left-color: light-dark(var(--s2-gray-400), var(--s2-gray-500));
       text-decoration: none;
     }
   }
 
   li.is-current > a {
-    background-color: light-dark(var(--s2-gray-200), rgb(255 255 255 / 18%));
+    border-left-color: light-dark(var(--s2-gray-800), var(--s2-gray-200));
+    font-weight: 600;
+  }
+
+  li:has(> .expand-tree) > a {
+    font-weight: 600;
   }
 
   .level-2 > li > a {
-    flex: 1 1 0%;
-    display: block;
-    margin-right: 8px;
     overflow: hidden;
-    padding: 4px 8px;
-    border-radius: 6px;
     text-overflow: ellipsis;
     white-space: nowrap;
-    width: 100px;
   }
 }
 
