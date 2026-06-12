@@ -73,14 +73,14 @@
     padding: 0;
     border: none;
     background-color: transparent;
-    width: 16px;
-    height: 16px;
+    width: 8px;
+    height: 8px;
     flex-shrink: 0;
     color: var(--s2-gray-400);
 
     svg {
-      width: 16px;
-      height: 16px;
+      width: 8px;
+      height: 8px;
     }
   }
 
