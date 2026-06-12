@@ -114,22 +114,36 @@
     display: block;
     overflow: hidden;
     padding: 4px 8px;
-    border-left: 2px solid transparent;
-    transition: border-left-color 0.15s ease;
+    transition: background-color 0.15s ease, border-left-color 0.15s ease;
 
     &:hover {
-      border-left-color: light-dark(var(--s2-gray-400), var(--s2-gray-500));
       text-decoration: none;
     }
   }
 
-  li.is-current > a {
-    border-left-color: light-dark(var(--s2-gray-800), var(--s2-gray-200));
-    font-weight: 600;
-  }
-
+  /* Expandable items (event, track, lab): rounded rect on hover */
   li:has(> .expand-tree) > a {
     font-weight: 600;
+    border-radius: 6px;
+
+    &:hover {
+      background-color: light-dark(var(--s2-gray-100), rgb(255 255 255 / 10%));
+    }
+  }
+
+  /* Leaf items (exercise steps): | bar on hover */
+  li:not(:has(> .expand-tree)) > a {
+    border-left: 2px solid transparent;
+
+    &:hover {
+      border-left-color: light-dark(var(--s2-gray-400), var(--s2-gray-500));
+    }
+  }
+
+  /* Current page (always a leaf exercise step) */
+  li.is-current > a {
+    font-weight: 600;
+    border-left-color: light-dark(var(--s2-gray-800), var(--s2-gray-200));
   }
 
   .level-2 > li > a {
