@@ -287,6 +287,7 @@ img {
       display: block;
       grid-area: sitenav;
       background-color: light-dark(rgb(0 0 0 / 5%), rgb(255 255 255 / 5%));
+      border-right: 1px solid var(--s2-gray-200);
     }
 
     main {
