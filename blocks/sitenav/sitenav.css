@@ -144,7 +144,7 @@ body.sitenav-open .sitenav {
 
 
 .sitenav ul:has(> li.is-open) > li:not(.is-open) > a {
-  color: light-dark(var(--s2-gray-500), var(--s2-gray-500));
+  color: light-dark(var(--s2-gray-700), var(--s2-gray-500));
   font-weight: 300;
 }
 
