@@ -85,7 +85,7 @@
   }
 
   li {
-    margin-block: 2px 0;
+    margin-block: 5px 0;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
