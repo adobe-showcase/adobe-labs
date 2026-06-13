@@ -1,4 +1,11 @@
 const DEFAULT_IMAGE = '/img/default-lab-card.png';
+const DEFAULT_AS26_IMAGE = '/img/default-as26-card.png';
+
+function getDefaultImage() {
+  return window.location.pathname.startsWith('/events/summit26')
+    ? DEFAULT_AS26_IMAGE
+    : DEFAULT_IMAGE;
+}
 
 async function fetchSiteData() {
   const normalizedPath = window.location.pathname.endsWith('/')
@@ -44,7 +51,7 @@ function createCards(siteData) {
     const imgContainer = document.createElement('div');
     imgContainer.className = 'docket-page-list-card-image';
     const img = document.createElement('img');
-    img.src = DEFAULT_IMAGE;
+    img.src = getDefaultImage();
     imgContainer.append(img);
 
     if (siteData[key].labNumber) {
