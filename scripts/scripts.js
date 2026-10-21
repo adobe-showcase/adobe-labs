@@ -85,13 +85,6 @@ function detectTutorial() {
   import('./lightbox.js');
 }
 
-function isTrackPage() {
-  if (!document.body.classList.contains('tutorial-template')) return false;
-  const pathname = window.location.pathname.replace(/\/$/, '');
-  const lastSegment = pathname.split('/').pop();
-  return !Number.isFinite(Number(lastSegment));
-}
-
 const loadNav = async (name) => {
   const position = name === 'sitenav' ? 'beforebegin' : 'afterend';
   const main = document.querySelector('main');
@@ -130,7 +123,7 @@ export async function loadPage() {
 
   // Lazy project functions
   loadNav('sitenav');
-  if (!isHome && !isTrackPage()) loadNav('pagenav');
+  if (!isHome) loadNav('pagenav');
 
   // Quick Edit
   const loadQuickEdit = async (...args) => {
