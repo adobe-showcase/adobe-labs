@@ -175,3 +175,18 @@ indices:
       labNumber:
         select: head > meta[name="lab-number"]
         value: attribute(el, "content")
+
+  event-abv-au:
+    include:
+      - /events/abv-au/**
+    target: /events/abv-au/query-index.json
+    properties:
+      title:
+        select: head > meta[property="og:title"]
+        value: attribute(el, "content")
+      description:
+        select: head > meta[name="description"]
+        value: attribute(el, "content")
+      labNumber:
+        select: head > meta[name="lab-number"]
+        value: attribute(el, "content")
